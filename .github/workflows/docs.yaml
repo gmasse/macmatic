@@ -1,0 +1,42 @@
+name: docs
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install Rust toolchain
+      run: rustup update --no-self-update stable
+
+    - name: Install OpenCV
+      run: brew install opencv
+
+    - name: Build Documentation
+      run: |
+        DYLD_FALLBACK_LIBRARY_PATH=/Library/Developer/CommandLineTools/usr/lib/ cargo doc --no-deps
+
+    - name: Adapt Website
+      run: |
+        mv ./target/doc/macmatic ./target/doc/doc
+        cp -r ./assets ./target/doc/doc/
+        echo "<!DOCTYPE html><meta charset=\"utf-8\"><title>Redirecting to https://github.com/gmasse/macmatic</title><meta http-equiv=\"refresh\" content=\"0; URL=https://github.com/gmasse/macmatic\">" > ./target/doc/index.html
+
+    - name: Deploy Docs
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./target/doc
+        force_orphan: true

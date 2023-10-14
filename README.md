@@ -1,13 +1,9 @@
-# macmatic
-A Rust library for macOS automation with image detection, keyboard and mouse control.
+![macmatic: A Rust library for macOS automation with image detection, keyboard and mouse control](./assets/banner.png)
 
-## Installation
+## Getting started
 
 ### Requirements
-- OpenCV `brew install opencv`
-
-### Quick start
-
+OpenCV: `brew install opencv`
 ```sh
 $ export DYLD_FALLBACK_LIBRARY_PATH="$(xcode-select --print-path)/usr/lib/:/Library/Developer/CommandLineTools/usr/lib/:${DYLD_FALLBACK_LIBRARY_PATH}"
 $ cargo add --git https://github.com/gmasse/macmatic.git
@@ -38,6 +34,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 ```
+
+## Documentation
+[API documentation](https://g.masse.me/macmatic/doc/)
 
 ## Example
 ```
