@@ -1,0 +1,99 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="macmatic: A Rust library for macOS automation with image detection, keyboard and mouse control"><title>macmatic - Rust</title><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Regular-46f98efaafac5295.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Regular-018c141bf0843ffd.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/FiraSans-Medium-8f9a781e4970d388.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Regular-562dcc5011b6de7d.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceSerif4-Bold-a2c9cd1067f8b328.ttf.woff2"><link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/SourceCodePro-Semibold-d899c5a5c4aeb14a.ttf.woff2"><link rel="stylesheet" href="../static.files/normalize-76eba96aa4d2e634.css"><link rel="stylesheet" href="../static.files/rustdoc-cb6f1f67f1bcd037.css" id="mainThemeStyle"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="macmatic" data-themes="" data-resource-suffix="" data-rustdoc-version="1.73.0 (cc66ad468 2023-10-03)" data-channel="1.73.0" data-search-js="search-6dfdfced5eff6596.js" data-settings-js="settings-de11bff964e9d4e5.js" data-settings-css="settings-8c76f75bfb6bd192.css" data-theme-light-css="light-1596385f77d47ef2.css" data-theme-dark-css="dark-0a43001d3fc2282c.css" data-theme-ayu-css="ayu-fd19013d6ce078bf.css" ><script src="../static.files/storage-db41da1a38ea3cb8.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-0795b7d26be81095.js"></script><noscript><link rel="stylesheet" media="(prefers-color-scheme:light)" href="../static.files/light-1596385f77d47ef2.css"><link rel="stylesheet" media="(prefers-color-scheme:dark)" href="../static.files/dark-0a43001d3fc2282c.css"><link rel="stylesheet" href="../static.files/noscript-cffde32267a19fd6.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-16x16-8b506e7a72182f1c.png"><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-422f7d1d52889060.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-2c020d218678b618.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle">&#9776;</button><a class="logo-container" href="../macmatic/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2></h2></nav><nav class="sidebar"><a class="logo-container" href="../macmatic/index.html"><img class="rust-logo" src="../static.files/rust-logo-151179464ae7ed46.svg" alt="logo"></a><h2 class="location"><a href="#">Crate macmatic</a></h2><div class="sidebar-elems"><ul class="block"><li class="version">Version 0.1.0</li><li><a id="all-types" href="all.html">All Items</a></li></ul><section><ul class="block"><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li></ul></section></div></nav><main><div class="width-limiter"><nav class="sub"><form class="search-form"><span></span><input class="search-input" name="search" aria-label="Run search in the documentation" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><div id="help-button" title="help" tabindex="-1"><a href="../help.html">?</a></div><div id="settings-menu" tabindex="-1"><a href="../settings.html" title="settings"><img width="22" height="22" alt="Change settings" src="../static.files/wheel-7b819b6101059cd0.svg"></a></div></form></nav><section id="main-content" class="content"><div class="main-heading"><h1>Crate <a class="mod" href="#">macmatic</a><button id="copy-path" title="Copy item path to clipboard"><img src="../static.files/clipboard-7571035ce49a181d.svg" width="19" height="18" alt="Copy item path"></button></h1><span class="out-of-band"><a class="src" href="../src/macmatic/lib.rs.html#1-624">source</a> · <button id="toggle-all-docs" title="collapse all docs">[<span>&#x2212;</span>]</button></span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p><img src="./assets/banner.png" alt="macmatic: A Rust library for macOS automation with image detection, keyboard and mouse control" /></p>
+<h3 id="getting-started"><a href="#getting-started">Getting started</a></h3><h4 id="requirements"><a href="#requirements">Requirements</a></h4>
+<p>OpenCV: <code>brew install opencv</code></p>
+<div class="example-wrap"><pre class="language-sh"><code>$ export DYLD_FALLBACK_LIBRARY_PATH=&quot;$(xcode-select --print-path)/usr/lib/:/Library/Developer/CommandLineTools/usr/lib/:${DYLD_FALLBACK_LIBRARY_PATH}&quot;
+$ cargo add --git https://github.com/gmasse/macmatic.git
+$ cargo add enigo
+</code></pre></div>
+<p>List available windows:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">fn </span>main() {
+    <span class="macro">println!</span>(<span class="string">&quot;{}&quot;</span>, macmatic::WindowList::new().prettify());
+}</code></pre></div>
+<p>Find image and click on it:</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>std::path::Path;
+<span class="kw">use </span>std::error::Error;
+<span class="kw">use </span>enigo::<span class="kw-2">*</span>;
+<span class="kw">use </span>macmatic::Bot;
+
+<span class="kw">fn </span>main() -&gt; <span class="prelude-ty">Result</span>&lt;(), Box&lt;<span class="kw">dyn </span>Error&gt;&gt; {
+    <span class="kw">let </span><span class="kw-2">mut </span>bot = Bot::new();
+    <span class="kw">let </span>enigo = Enigo::new();
+    bot.set_controller(enigo);
+
+    bot.set_window_from_name(<span class="string">&quot;Wikipedia-logo-v2.svg.png&quot;</span>);
+    bot.activate_window()<span class="question-mark">?</span>; <span class="comment">// click on the top of the window to make it active
+    </span>bot.click_on_image(Path::new(<span class="string">&quot;W.png&quot;</span>), <span class="number">500</span>)<span class="question-mark">?</span>; <span class="comment">// find the image W.png in the window and click on it
+
+    </span><span class="prelude-val">Ok</span>(())
+}</code></pre></div>
+<h3 id="documentation"><a href="#documentation">Documentation</a></h3>
+<p><a href="https://g.masse.me/macmatic/doc/">API documentation</a></p>
+<h3 id="example"><a href="#example">Example</a></h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code>$ git clone https:<span class="comment">//github.com/gmasse/macmatic.git
+</span>$ cd macmatic
+$ export DYLD_FALLBACK_LIBRARY_PATH=<span class="string">&quot;$(xcode-select --print-path)/usr/lib/:/Library/Developer/CommandLineTools/usr/lib/:${DYLD_FALLBACK_LIBRARY_PATH}&quot;
+</span>$ cargo run --example preview
+
+An example of the macmatic framework
+
+Usage: preview [OPTIONS] &lt;COMMAND&gt;
+
+Commands:
+  list          list windows name
+  screenshot    screenshot a window
+  test_find     Search the template image <span class="kw">in </span>a window
+  test_preview  Example of automation of the Preview app
+  help          Print this message or the help of the given subcommand(s)
+
+Options:
+  -w, --window &lt;NAME&gt;  Name of the window to capture (prefix with ~ <span class="kw">for </span>regexp)
+  -i, --id &lt;ID&gt;        Id of the window to capture
+  -h, --help           Print help</code></pre></div>
+<h4 id="list-available-windows"><a href="#list-available-windows">List available windows</a></h4><div class="example-wrap"><pre class="language-sh"><code>$ cargo run --example preview list
+
+Id     Window Name                    Window Owner Name
+------------------------------------------------------------------
+11833  Item-0                         Antivirus for Mac
+8653   Item-0                         Rectangle
+8899   Item-0                         Bitwarden
+21915  Item-0                         Spotlight
+21505  Menubar                        Window Server
+14474  cargo run --example preview... iTerm2
+25829  Wikipedia-logo-v2.svg.png      Preview
+</code></pre></div><h4 id="image-detection"><a href="#image-detection">Image detection</a></h4><div class="example-wrap"><pre class="language-sh"><code>$ open -a Preview examples/img/Wikipedia-logo-v2.svg.png
+$ RUST_LOG=debug cargo run --example preview -- --window &#39;Wikipedia-logo-v2.svg.png&#39; test_find --template &#39;examples/img/W.png&#39;
+
+[2023-10-09T21:07:49Z DEBUG preview] Display size: (2560, 1440)
+[2023-10-09T21:07:49Z DEBUG macmatic] Activating window
+[2023-10-09T21:07:49Z DEBUG macmatic] Click on: 565, 39
+[2023-10-09T21:07:51Z DEBUG macmatic] found: Rect { x: 1192, y: 676, width: 300, height: 240 }
+[2023-10-09T21:07:51Z INFO  preview] Template found at Rect {
+        x: 1192,
+        y: 676,
+        width: 300,
+        height: 240,
+    }
+</code></pre></div><h4 id="mouse-and-keybord-automation"><a href="#mouse-and-keybord-automation">Mouse and keybord automation</a></h4><div class="example-wrap"><pre class="language-sh"><code>$ RUST_LOG=debug cargo run --example preview -- --window &#39;Wikipedia-logo-v2.svg.png&#39; test_preview
+
+[2023-10-09T21:09:21Z DEBUG preview] Display size: (2560, 1440)
+[2023-10-09T21:09:21Z DEBUG macmatic] Activating window
+[2023-10-09T21:09:21Z DEBUG macmatic] Click on: 565, 39
+[2023-10-09T21:09:23Z DEBUG macmatic] found: Rect { x: 1192, y: 676, width: 300, height: 240 }
+[2023-10-09T21:09:23Z DEBUG macmatic] Mouse down on: 600, 367
+[2023-10-09T21:09:24Z DEBUG macmatic] Mouse up on: 750, 487
+[2023-10-09T21:09:24Z DEBUG macmatic] Key down: Control
+[2023-10-09T21:09:24Z DEBUG macmatic] Key down: Meta
+[2023-10-09T21:09:24Z DEBUG macmatic] Key click: Layout(
+        &#39;T&#39;,
+    )
+[2023-10-09T21:09:25Z DEBUG macmatic] Key up: Meta
+[2023-10-09T21:09:25Z DEBUG macmatic] Key up: Control
+[2023-10-09T21:09:25Z DEBUG macmatic] Typing: macmatic
+[2023-10-09T21:09:26Z DEBUG macmatic] Searching examples/img/W.png
+[2023-10-09T21:09:26Z DEBUG macmatic] Image found on: Rect { x: 1192, y: 735, width: 300, height: 240 }
+[2023-10-09T21:09:26Z DEBUG macmatic] Click on: 675, 456
+</code></pre></div>
+<p><img src="assets/macmatic.preview.480.6fps.mov" alt="Screen recording" /></p>
+</div></details><h2 id="modules" class="small-section-header"><a href="#modules">Modules</a></h2><ul class="item-table"><li><div class="item-name"><a class="mod" href="error/index.html" title="mod macmatic::error">error</a></div><div class="desc docblock-short">Error reporting</div></li></ul><h2 id="structs" class="small-section-header"><a href="#structs">Structs</a></h2><ul class="item-table"><li><div class="item-name"><a class="struct" href="struct.Bot.html" title="struct macmatic::Bot">Bot</a></div><div class="desc docblock-short">The <code>Bot</code> struct provides automation capabilities for interacting with a window.</div></li><li><div class="item-name"><a class="struct" href="struct.Bounds.html" title="struct macmatic::Bounds">Bounds</a></div><div class="desc docblock-short">Structure representing the absolute coordinates of a window.</div></li><li><div class="item-name"><a class="struct" href="struct.Rect.html" title="struct macmatic::Rect">Rect</a></div><div class="desc docblock-short">Structure representing a rectangle zone in the window.</div></li><li><div class="item-name"><a class="struct" href="struct.Window.html" title="struct macmatic::Window">Window</a></div><div class="desc docblock-short">The <code>Window</code> struct represents a single window.</div></li><li><div class="item-name"><a class="struct" href="struct.WindowList.html" title="struct macmatic::WindowList">WindowList</a></div><div class="desc docblock-short">The <code>WindowList</code> struct represents a list of windows.</div></li></ul></section></div></main></body></html>

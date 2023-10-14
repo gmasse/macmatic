@@ -1,0 +1,3 @@
+(function() {var implementors = {
+"macmatic":[["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.73.0/core/clone/trait.Clone.html\" title=\"trait core::clone::Clone\">Clone</a> for <a class=\"struct\" href=\"macmatic/struct.Bounds.html\" title=\"struct macmatic::Bounds\">Bounds</a>"],["impl <a class=\"trait\" href=\"https://doc.rust-lang.org/1.73.0/core/clone/trait.Clone.html\" title=\"trait core::clone::Clone\">Clone</a> for <a class=\"struct\" href=\"macmatic/struct.Window.html\" title=\"struct macmatic::Window\">Window</a>"]]
+};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
